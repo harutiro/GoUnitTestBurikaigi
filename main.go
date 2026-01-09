@@ -47,10 +47,22 @@ func (cr *ClosedRange) ToString() string {
 	return fmt.Sprintf("[%+v,%+v]\n",*cr.GetLowerEndpoint(),*cr.GetUpperEndpoint())
 }
 
+//TODO: 部分探索にしたほうが絶対にいい
+func (cr *ClosedRange) Contains(value int) bool {
+	for _ , number := range cr.ClosedRangeList {
+		if value == number{
+			return true
+		}
+	}
+	return false
+}
+
 func main() {
-	cr := NewClosedRange(3,7)
+	cr := NewClosedRange(3,70)
 	fmt.Println("Closed Range List:", cr.ClosedRangeList)
 	fmt.Printf("Lower Endpoint: %+v\n", *cr.GetLowerEndpoint())
 	fmt.Printf("Upper Endpoint: %+v\n", *cr.GetUpperEndpoint())
 	fmt.Println("IntToString:", cr.ToString())
+	fmt.Println("Contains:", cr.Contains(4))
+	fmt.Println("Contains:", cr.Contains(0))
 }
