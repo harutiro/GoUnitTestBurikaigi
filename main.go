@@ -47,14 +47,14 @@ func (cr *ClosedRange) ToString() string {
 	return fmt.Sprintf("[%+v,%+v]\n",*cr.GetLowerEndpoint(),*cr.GetUpperEndpoint())
 }
 
-//TODO: 部分探索にしたほうが絶対にいい
+// Optimized: Uses boundary checking instead of full list iteration
 func (cr *ClosedRange) Contains(value int) bool {
-	for _ , number := range cr.ClosedRangeList {
-		if value == number{
-			return true
-		}
+	if len(cr.ClosedRangeList) == 0 {
+		return false
 	}
-	return false
+	lowerEndpoint := cr.ClosedRangeList[0]
+	upperEndpoint := cr.ClosedRangeList[len(cr.ClosedRangeList)-1]
+	return value >= lowerEndpoint && value <= upperEndpoint
 }
 
 func main() {
